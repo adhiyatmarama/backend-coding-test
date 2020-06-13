@@ -12,6 +12,10 @@
     "coverage": "nyc --reporter=text npm run test",
     "start": "node index.js"
   },
+  "pre-push": [
+    "lint",
+    "coverage"
+  ],
   "keywords": [
     "Xendit"
   ],
