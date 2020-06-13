@@ -16,6 +16,10 @@
     "lint",
     "coverage"
   ],
+  "nyc": {
+    "include": "src",
+    "exclude": "services"
+  },
   "keywords": [
     "Xendit"
   ],
