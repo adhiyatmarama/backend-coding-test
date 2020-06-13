@@ -12,6 +12,10 @@ const db = new sqlite3.Database(':memory:');
 
 const buildSchemas = require('./src/schemas');
 
+module.exports = {
+    db
+};
+
 db.serialize(() => {
     buildSchemas(db);
 
