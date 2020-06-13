@@ -8,7 +8,9 @@ const db = new sqlite3.Database(':memory:');
 const app = require('../src/app')(db);
 const buildSchemas = require('../src/schemas');
 
+// eslint-disable-next-line
 describe('API tests', () => {
+    // eslint-disable-next-line
     before((done) => {
         db.serialize((err) => { 
             if (err) {
@@ -20,8 +22,9 @@ describe('API tests', () => {
             done();
         });
     });
-
+    // eslint-disable-next-line
     describe('GET /health', () => {
+        // eslint-disable-next-line
         it('should return health', (done) => {
             request(app)
                 .get('/health')
