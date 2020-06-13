@@ -9,6 +9,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./",
     "test": "mocha tests",
+    "coverage": "nyc --reporter=text npm run test",
     "start": "node index.js"
   },
   "keywords": [
