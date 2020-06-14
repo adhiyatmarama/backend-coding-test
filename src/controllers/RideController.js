@@ -120,8 +120,4 @@ class RideController {
     }
 }
 
-function validation(startLat, endLat, startLong, endLong, riderName, driverName, driverVehicle){
-    
-}
-
 module.exports = RideController;
