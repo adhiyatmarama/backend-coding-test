@@ -44,6 +44,7 @@ class RideController {
         const riderName = req.body.rider_name;
         const driverName = req.body.driver_name;
         const driverVehicle = req.body.driver_vehicle;
+        console.log(typeof(startLatitude));
         const validationErrors = validate(startLatitude, endLatitude, startLongitude, endLongitude, riderName, driverName, driverVehicle);
 
         if(validationErrors.length > 0){

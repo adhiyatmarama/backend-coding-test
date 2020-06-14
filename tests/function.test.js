@@ -15,13 +15,15 @@ const paginateData = [
 describe('validate function test', function(){
     // eslint-disable-next-line
     it('should return array of errors', function(done){
-        const result = validate(95, 95, 95, 95, '', '', '');
+        const result = validate('a', 'a', 'a', 'a', '', '', '');
         if(
-            result[0] == 'Start latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively' &&
-            result[1] == 'End latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively' &&
-            result[2] == 'Rider name must be a non empty string' &&
-            result[3] == 'Driver name must be a non empty string' &&
-            result[4] == 'Driver vehicle must be a non empty string'
+            result[0] == 'Start latitude and longitude should be a number' &&
+            result[1] == 'Start latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively' &&
+            result[2] == 'End latitude and longitude should be a number' &&
+            result[3] == 'End latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively' &&
+            result[4] == 'Rider name must be a non empty string' &&
+            result[5] == 'Driver name must be a non empty string' &&
+            result[6] == 'Driver vehicle must be a non empty string'
         ){
             done();
         }else{
