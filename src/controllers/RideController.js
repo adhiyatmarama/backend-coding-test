@@ -1,6 +1,6 @@
 const RideModel = require('../models/RideModel');
 
-const {validate} = require('../services/functions');
+const {validate, paginate} = require('../services/functions');
 
 class RideController {
     static async getAll(req, res,){
@@ -19,9 +19,7 @@ class RideController {
                     message: 'Could not find any rides'
                 });
             } else if(req.query.page){
-                const startIndex = (page - 1) * limit;
-                const endIndex = page * limit;
-                const result = rows.slice(startIndex, endIndex);
+                const result = paginate(page, limit, rows);
                 res.status(200).json(result);
             } else {
                 res.status(200).json(rows);

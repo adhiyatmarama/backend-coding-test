@@ -23,7 +23,14 @@ function validate(startLat, endLat, startLong, endLong, riderName, driverName, d
     return errors;
 }
 
+function paginate(page, limit, data){
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const result = data.slice(startIndex, endIndex);
+    return result;
+}
 
 module.exports = {
-    validate
+    validate,
+    paginate
 };
