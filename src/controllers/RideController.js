@@ -1,20 +1,15 @@
 const RideModel = require('../models/RideModel');
 
 class RideController {
-    static getAll(req, res,){
+    static async getAll(req, res,){
         req.logger.info('request received at GET /rides');
         let page = Number(req.query.page) || 1;
         let limit = Number(req.query.limit) || 10;
         const db = req.db;
-        RideModel.getAll(db, (err, rows) => {
-            if(err){
-                // req.logger.error('Server error at GET /rides');
-                res.status(500).json({
-                    error_code: 500,
-                    type: 'SERVER_ERROR',
-                    message: 'Unknown error'
-                });
-            }else if (rows.length === 0) {
+
+        try{
+            const rows = await RideModel.getAll(db);
+            if (rows.length === 0) {
                 // req.logger.error('Rides not found error at GET /rides');
                 res.status(404).json({
                     error_code: 404,
@@ -29,11 +24,16 @@ class RideController {
             } else {
                 res.status(200).json(rows);
             }
-
-        });
+        }catch(err){
+            res.status(500).json({
+                error_code: 500,
+                type: 'SERVER_ERROR',
+                message: 'Unknown error'
+            });
+        }
     }
 
-    static addRide(req, res){
+    static async addRide(req, res){
         req.logger.info('Request received at POST /rides');
         const db = req.db;
 
@@ -73,38 +73,34 @@ class RideController {
                 messages: validationErrors,
             });
         } else {
-            var values = [req.body.start_lat, req.body.start_long, req.body.end_lat, req.body.end_long, req.body.rider_name, req.body.driver_name, req.body.driver_vehicle];
-    
-            RideModel.addRide(db, values, (err, rows) => {
-                if(err){
-                    res.status(500).json({
-                        error_code: 500,
-                        type: 'SERVER_ERROR',
-                        message: 'Unknown error'
-                    });
-                }else{
-                    res.status(201).json({
-                        message: 'Successfully add a ride',
-                        ride: rows[0],
-                    });
-                }
-            });
-        }
-    }
-
-    static getOneByID(req, res){
-        req.logger.info('Request received at GET /rides/:id');
-        const db = req.db;
-
-        const id = Number(req.params.id);
-        RideModel.getOneById(db, id, (err, rows) => {
-            if(err){
+            var values = [startLatitude, startLongitude, endLatitude, endLongitude, riderName, driverName, driverVehicle];
+            
+            try {
+                const rows = await RideModel.addRide(db, values);
+                console.log(rows, '<< rows');
+                res.status(201).json({
+                    message: 'Successfully add a ride',
+                    ride: rows[0],
+                });
+                
+            }catch(err){
                 res.status(500).json({
                     error_code: 500,
                     type: 'SERVER_ERROR',
                     message: 'Unknown error'
                 });
-            }else if (rows.length === 0) {
+            }
+        }
+    }
+
+    static async getOneByID(req, res){
+        req.logger.info('Request received at GET /rides/:id');
+        const db = req.db;
+
+        const id = Number(req.params.id);
+        try {
+            const rows = await RideModel.getOneById(db, id);
+            if (rows.length === 0) {
                 res.status(404).json({
                     error_code: 404,
                     type: 'RIDES_NOT_FOUND_ERROR',
@@ -114,9 +110,19 @@ class RideController {
                 res.status(200).json({
                     ride: rows[0],
                 });
-            }
-        });
+            } 
+        } catch (error) {
+            res.status(500).json({
+                error_code: 500,
+                type: 'SERVER_ERROR',
+                message: 'Unknown error'
+            });
+        }
     }
+}
+
+function validation(startLat, endLat, startLong, endLong, riderName, driverName, driverVehicle){
+    
 }
 
 module.exports = RideController;
