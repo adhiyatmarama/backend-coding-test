@@ -98,7 +98,7 @@ class RideController {
                     message: 'Unknown error'
                 });
             }else if (rows.length === 0) {
-                res.status(400).json({
+                res.status(404).json({
                     error_code: 404,
                     type: 'RIDES_NOT_FOUND_ERROR',
                     message: 'Could not find any rides'
