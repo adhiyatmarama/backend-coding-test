@@ -1,7 +1,5 @@
-const {db} = require('../../index');
-
 class RideModel {
-    static getAll(cb){
+    static getAll(db, cb){
         db.all('SELECT * FROM Rides', function (err, rows) {
             if (err) {
                 cb(err, null);
@@ -11,7 +9,7 @@ class RideModel {
         });
     }
 
-    static addRide(values, cb){
+    static addRide(db, values, cb){
         db.run('INSERT INTO Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) VALUES (?, ?, ?, ?, ?, ?, ?)', values, function (err) {
             if(err){
                 cb(err, null);
@@ -27,7 +25,7 @@ class RideModel {
         });
     }
 
-    static getOneById(id, cb){
+    static getOneById(db, id, cb){
         db.all('SELECT * FROM Rides WHERE rideID = ?', id, function (err, rows) {
             if(err){
                 cb(err, null);

@@ -17,12 +17,21 @@ module.exports = (db) => {
         res.send('Healthy');
     });
 
-    app.use('/rides', jsonParser, ridesRoute);
+    app.use('/rides', 
+        jsonParser, 
+        function(req, res, next) {
+            req.db = db;
+            next();
+        }, 
+        bringLogger,
+        ridesRoute
+    );
 
     return app;
 };
 
-// function bringLogger(req, res, next){
-//     req.logger = logger;
-//     next();
-// }
+function bringLogger(req, res, next){
+    req.logger = logger;
+    next();
+}
+

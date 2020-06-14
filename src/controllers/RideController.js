@@ -2,8 +2,9 @@ const RideModel = require('../models/RideModel');
 
 class RideController {
     static getAll(req, res,){
-        // req.logger.info('request received at GET /rides');
-        RideModel.getAll((err, rows) => {
+        req.logger.info('request received at GET /rides');
+        const db = req.db;
+        RideModel.getAll(db, (err, rows) => {
             if(err){
                 // req.logger.error('Server error at GET /rides');
                 res.status(500).json({
@@ -26,7 +27,8 @@ class RideController {
     }
 
     static addRide(req, res){
-        // req.logger.info('Request received at POST /rides');
+        req.logger.info('Request received at POST /rides');
+        const db = req.db;
 
         const startLatitude = Number(req.body.start_lat);
         const startLongitude = Number(req.body.start_long);
@@ -66,7 +68,7 @@ class RideController {
         } else {
             var values = [req.body.start_lat, req.body.start_long, req.body.end_lat, req.body.end_long, req.body.rider_name, req.body.driver_name, req.body.driver_vehicle];
     
-            RideModel.addRide(values, (err, rows) => {
+            RideModel.addRide(db, values, (err, rows) => {
                 if(err){
                     res.status(500).json({
                         error_code: 500,
@@ -84,10 +86,11 @@ class RideController {
     }
 
     static getOneByID(req, res){
-        // req.logger.info('Request received at GET /rides/:id');
+        req.logger.info('Request received at GET /rides/:id');
+        const db = req.db;
 
         const id = Number(req.params.id);
-        RideModel.getOneById(id, (err, rows) => {
+        RideModel.getOneById(db, id, (err, rows) => {
             if(err){
                 res.status(500).json({
                     error_code: 500,
