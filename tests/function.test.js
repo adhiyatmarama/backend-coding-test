@@ -50,7 +50,7 @@ describe('paginate function test', function(){
         // eslint-disable-next-line
         it('should return data from index = 4 to index = 7', function(done){
             const result = paginate(2, 4, paginateData);
-            let check = true
+            let check = true;
             for(let i = 0; i < 4; i++){
                 if(result[i] !== paginateData[i + 4]){
                     check = false;
