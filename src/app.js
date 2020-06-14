@@ -11,13 +11,18 @@ const jsonParser = bodyParser.json();
 
 const ridesRoute = require('./routes/ridesRoute');
 
-module.exports = (db) => {
+module.exports = () => {
     app.get('/health', (req, res) => {
         logger.info('request recevied at /health');
         res.send('Healthy');
     });
-    
-    app.use('/rides', jsonParser, ridesRoute);
+
+    app.use('/rides', jsonParser, bringLogger, ridesRoute);
 
     return app;
 };
+
+function bringLogger(req, res, next){
+    req.logger = logger;
+    next();
+}
