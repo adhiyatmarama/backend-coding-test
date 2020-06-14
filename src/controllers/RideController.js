@@ -3,6 +3,8 @@ const RideModel = require('../models/RideModel');
 class RideController {
     static getAll(req, res,){
         req.logger.info('request received at GET /rides');
+        let page = Number(req.query.page) || 1;
+        let limit = Number(req.query.limit) || 10;
         const db = req.db;
         RideModel.getAll(db, (err, rows) => {
             if(err){
@@ -19,6 +21,11 @@ class RideController {
                     type: 'RIDES_NOT_FOUND_ERROR',
                     message: 'Could not find any rides'
                 });
+            } else if(req.query.page){
+                const startIndex = (page - 1) * limit;
+                const endIndex = page * limit;
+                const result = rows.slice(startIndex, endIndex);
+                res.status(200).json(result);
             } else {
                 res.status(200).json(rows);
             }
