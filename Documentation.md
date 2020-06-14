@@ -13,6 +13,13 @@ This is the documentation for using this test API. The base url for this API is 
   
   `GET`
 
+* **URL QUERY PARAMETERS**
+  
+  Param | Value
+  ----- | -----
+  Page | Integer
+  Limit | Integer
+
 * **SUCCESS RESPONSE**
   
   * CODE: 200 
