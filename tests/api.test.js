@@ -116,6 +116,16 @@ describe('API tests', () => {
                     .expect(200,  done);
             });
         });
+        // eslint-disable-next-line
+        describe('successfully get rides with pagination', () => {
+            // eslint-disable-next-line
+            it('should return 200', (done) => {
+                request(app)
+                    .get('/rides?page=1&limit=5')
+                    .expect('Content-Type', /json/)
+                    .expect(200,  done);
+            });
+        });
     });
     // eslint-disable-next-line
     describe('GET /rides/:id', () => {
