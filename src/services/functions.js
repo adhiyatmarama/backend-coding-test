@@ -1,6 +1,16 @@
 function validate(startLat, endLat, startLong, endLong, riderName, driverName, driverVehicle){
     const errors = [];
 
+    if(typeof(startLat) !== 'number' || typeof(startLong) !== 'number'){
+        errors.push('Start latitude and longitude should be a number');
+        errors.push('Start latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively');
+    }
+
+    if(typeof(endLat) !=='number' || typeof(endLong) !== 'number'){
+        errors.push('End latitude and longitude should be a number');
+        errors.push('End latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively');
+    }
+
     if (startLat < -90 || startLat > 90 || startLong < -180 || startLong > 180) {
         errors.push('Start latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively');
     }
