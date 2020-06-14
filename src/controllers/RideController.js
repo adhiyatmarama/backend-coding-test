@@ -77,7 +77,6 @@ class RideController {
             
             try {
                 const rows = await RideModel.addRide(db, values);
-                console.log(rows, '<< rows');
                 res.status(201).json({
                     message: 'Successfully add a ride',
                     ride: rows[0],
