@@ -1,5 +1,7 @@
 const RideModel = require('../models/RideModel');
 
+const {validate, paginate} = require('../services/functions');
+
 class RideController {
     static async getAll(req, res,){
         req.logger.info('request received at GET /rides');
@@ -17,9 +19,7 @@ class RideController {
                     message: 'Could not find any rides'
                 });
             } else if(req.query.page){
-                const startIndex = (page - 1) * limit;
-                const endIndex = page * limit;
-                const result = rows.slice(startIndex, endIndex);
+                const result = paginate(page, limit, rows);
                 res.status(200).json(result);
             } else {
                 res.status(200).json(rows);
@@ -44,27 +44,7 @@ class RideController {
         const riderName = req.body.rider_name;
         const driverName = req.body.driver_name;
         const driverVehicle = req.body.driver_vehicle;
-        const validationErrors = [];
-
-        if (startLatitude < -90 || startLatitude > 90 || startLongitude < -180 || startLongitude > 180) {
-            validationErrors.push('Start latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively');
-        }
-
-        if (endLatitude < -90 || endLatitude > 90 || endLongitude < -180 || endLongitude > 180) {
-            validationErrors.push('End latitude and longitude must be between -90 - 90 and -180 to 180 degrees respectively');
-        }
-
-        if (typeof riderName !== 'string' || riderName.length < 1) {
-            validationErrors.push('Rider name must be a non empty string');
-        }
-
-        if (typeof driverName !== 'string' || driverName.length < 1) {
-            validationErrors.push('Driver name must be a non empty string');
-        }
-
-        if (typeof driverVehicle !== 'string' || driverVehicle.length < 1) {
-            validationErrors.push('Driver vehicle must be a non empty string');
-        }
+        const validationErrors = validate(startLatitude, endLatitude, startLongitude, endLongitude, riderName, driverName, driverVehicle);
 
         if(validationErrors.length > 0){
             res.status(400).json({
