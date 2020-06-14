@@ -1,4 +1,4 @@
-function validation(startLat, endLat, startLong, endLong, riderName, driverName, driverVehicle){
+function validate(startLat, endLat, startLong, endLong, riderName, driverName, driverVehicle){
     const errors = [];
 
     if (startLat < -90 || startLat > 90 || startLong < -180 || startLong > 180) {
@@ -23,6 +23,7 @@ function validation(startLat, endLat, startLong, endLong, riderName, driverName,
     return errors;
 }
 
+
 module.exports = {
-    validation
-}
+    validate
+};

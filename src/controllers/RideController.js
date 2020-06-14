@@ -1,6 +1,6 @@
 const RideModel = require('../models/RideModel');
 
-const {validation} = require('../services/functions');
+const {validate} = require('../services/functions');
 
 class RideController {
     static async getAll(req, res,){
@@ -46,7 +46,7 @@ class RideController {
         const riderName = req.body.rider_name;
         const driverName = req.body.driver_name;
         const driverVehicle = req.body.driver_vehicle;
-        const validationErrors = validation(startLatitude, endLatitude, startLongitude, endLongitude, riderName, driverName, driverVehicle);
+        const validationErrors = validate(startLatitude, endLatitude, startLongitude, endLongitude, riderName, driverName, driverVehicle);
 
         if(validationErrors.length > 0){
             res.status(400).json({
