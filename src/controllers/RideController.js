@@ -2,17 +2,17 @@ const RideModel = require('../models/RideModel');
 
 class RideController {
     static getAll(req, res,){
-        req.logger.info('request received at GET /rides');
+        // req.logger.info('request received at GET /rides');
         RideModel.getAll((err, rows) => {
             if(err){
-                req.logger.error('Server error at GET /rides');
+                // req.logger.error('Server error at GET /rides');
                 res.status(500).json({
                     error_code: 500,
                     type: 'SERVER_ERROR',
                     message: 'Unknown error'
                 });
             }else if (rows.length === 0) {
-                req.logger.error('Rides not found error at GET /rides');
+                // req.logger.error('Rides not found error at GET /rides');
                 res.status(404).json({
                     error_code: 404,
                     type: 'RIDES_NOT_FOUND_ERROR',
@@ -26,7 +26,7 @@ class RideController {
     }
 
     static addRide(req, res){
-        req.logger.info('Request received at POST /rides');
+        // req.logger.info('Request received at POST /rides');
 
         const startLatitude = Number(req.body.start_lat);
         const startLongitude = Number(req.body.start_long);
@@ -84,7 +84,7 @@ class RideController {
     }
 
     static getOneByID(req, res){
-        req.logger.info('Request received at GET /rides/:id');
+        // req.logger.info('Request received at GET /rides/:id');
 
         const id = Number(req.params.id);
         RideModel.getOneById(id, (err, rows) => {
