@@ -8,6 +8,7 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./",
+    "load:test": "./node_modules/.bin/artillery run hello.yml",
     "test": "mocha tests",
     "coverage": "nyc --reporter=text npm run test",
     "start": "node index.js"
