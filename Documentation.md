@@ -1,4 +1,4 @@
-# kanban
+# Rides API
 
 This is the documentation for using this test API. The base url for this API is `http://localhost:8010`
 
